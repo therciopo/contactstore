@@ -1,0 +1,115 @@
+<div class="edit-form">  
+  <form #form="ngForm" (submit)="onSubmit(form)" autocomplete="off" class="row g-3">
+    <h2 class="text-center text-primary">Contact</h2>
+    <input type="hidden" name="id" #id="ngModel" [(ngModel)]="currentContact.id">
+    <div class="form-group col-md-6">
+      <label>First Name</label>
+      <input type="text" minlength="3" maxlength="20"
+             class="form-control"
+             name="firstName" #firstName="ngModel"
+             [(ngModel)]="currentContact.firstName"
+             [ngClass]="{ 'is-invalid': submitted && form.controls['firstName'].errors }" required />
+      @if (submitted && form.controls['firstName'].errors) {
+      <div class="invalid-feedback">
+        @if (form.controls['firstName'].errors['required']) {
+        <div>First Name is required</div>
+        }
+        @if (form.controls['firstName'].errors['minlength']) {
+        <div>First Name must be at least 3 characters</div>
+        }
+      </div>
+      }
+    </div>
+    <div class="form-group col-md-6">
+      <label>Last Name</label>
+      <input type="text"
+             name="lastName" #lastName="ngModel"
+             class="form-control"
+             [(ngModel)]="currentContact.lastName" required
+             [ngClass]="{ 'is-invalid': submitted && form.controls['lastName'].errors }" />
+      @if (submitted && form.controls['lastName'].errors) {
+      <div class="invalid-feedback">
+        @if (form.controls['lastName'].errors['required']) {
+        <div>Last Name is required</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="title">Title</label>
+      <select class="form-control"
+              name="title" #title="ngModel"
+              [(ngModel)]="currentContact.title" required
+              [ngClass]="{ 'is-invalid': submitted && form.controls['title'].errors }">
+        <option selected disabled value="">Choose...</option>
+        <option value="Mr">Mr</option>
+        <option value="Ms">Ms</option>
+        <option value="Mrs">Mrs</option>
+        <option value="Miss">Miss</option>
+      </select>
+      @if (submitted && form.controls['title'].errors) {
+      <div class="invalid-feedback">
+        @if (form.controls['title'].errors['required']) {
+        <div>Title is required</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Middle Initial</label>
+      <input type="text" maxlength="1"
+             name="middleInitial" #middleInitial="ngModel"
+             class="form-control"
+             [(ngModel)]="currentContact.middleInitial" />
+    </div>
+
+    <div>
+      <label for="email">Email</label>
+      <input type="text"
+             name="email" #email="ngModel"
+             class="form-control"
+             [(ngModel)]="currentContact.email" required email
+             [ngClass]="{ 'is-invalid': submitted && form.controls['email'].errors }" />
+      @if (submitted && form.controls['email'].errors) {
+      <div class="invalid-feedback">
+        @if (form.controls['email'].errors['required']) {
+        <div>Email is required</div>
+        } @if (form.controls['email'].errors['email']) {
+        <div>Email is invalid</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group col-md-12">
+      <label for="phone">Phone</label>
+      <input type="text"
+             name="phone" #phone="ngModel"
+             class="form-control" mask="(000)-000-0000" [showMaskTyped]="true"
+             [(ngModel)]="currentContact.phone" required
+             [ngClass]="{ 'is-invalid': submitted && form.controls['phone'].errors }" />
+      @if (submitted && form.controls['phone'].errors) {
+      <div class="invalid-feedback">
+        @if (form.controls['phone'].errors['required']) {
+        <div>Phone is required</div>
+        } @if (form.controls['phone'].errors['minlength']) {
+        <div>Phone must be at least 6 characters</div>
+        } @if (form.controls['phone'].errors['maxlength']) {
+        <div>Phone must not exceed 10 characters</div>
+        }
+        @if (form.controls['phone'].errors['mask'] || form.controls['phone'].errors['pattern']) {
+        <div>Phone is invalid</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="m-1 btn btn-sm btn-success">Save</button>
+
+      <button class="m-1 btn btn-sm btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>  
+</div>

@@ -1,0 +1,6 @@
+@Contacts.Server_HostAddress = https://localhost:7027
+
+GET {{Contacts.Server_HostAddress}}/api/contacts/
+Accept: application/json
+
+###

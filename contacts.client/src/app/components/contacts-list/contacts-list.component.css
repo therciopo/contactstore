@@ -1,0 +1,9 @@
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
+
+.table-striped tbody tr.highlight td {
+  background-color: lightblue;
+}

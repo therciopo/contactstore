@@ -1,0 +1,70 @@
+<div class="jumbtron">
+  <h1 class="display-4 text-center">Contacts</h1>
+</div>
+
+
+<div class="col-md-12">
+  <button type="button" class="btn btn-success" (click)="addContact()">New Contact</button>
+  <hr />
+
+
+  <div class="form-group col-md-4">
+    <label>Search</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="form-control bg-white">
+          <i class="fas fa-search"></i>
+        </div>
+      </div>  
+      <input class="form-control"
+             placeholder="Search by name or email"
+             type="text" [(ngModel)]="searchTerm" (ngModelChange)="search()"  />
+    </div>
+  </div>
+  <div>
+    <pagination-controls previousLabel="Prev"
+                         nextLabel="Next"
+                         [responsive]="true"
+                         (pageChange)="handlePageChange($event)"></pagination-controls>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-condensed table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>          
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (contact of contacts | paginate: {
+        itemsPerPage: pageSize,
+        currentPage: page,
+        totalItems: count
+        }; track contact.id; let i = $index) {
+        <tr [class.active]="i == currentIndex" [ngClass]="{'highlight': i == currentIndex}">
+          <th scope="row">{{ contact.id }}</th>
+          <td>{{ contact.firstName }}</td>
+          <td>{{ contact.lastName }}</td>
+          <td>{{ contact.email }}</td>          
+          <td class="action-button-column">
+            <a title="Edit" (click)="editContact(contact.id)"><i class="fas fa-edit"></i> </a>
+            <a title="Delete" (click)="deleteContact(contact.id)" style="margin-left: 12px;"><i class="fas fa-trash-alt"></i> </a>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+
+    Items per Pag:
+    <select (change)="handlePageSizeChange($event)">
+      @for (size of pageSizes; track size) {
+      <option>
+        {{ size }}
+      </option>
+      }
+    </select>
+  </div>
+</div>
